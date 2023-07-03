@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Category, Status, Product } from '../entities';
-import { seedStatus } from '../seeds';
+import { Category, Status, Product } from './entities';
+import { productsSeeder } from './seeds';
 
 @Injectable()
 export class ProvisioningService {
@@ -15,24 +15,27 @@ export class ProvisioningService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  async createTables(): Promise<void> {
+  private async createTables(): Promise<void> {
     await this.createCategoryTable();
     await this.createStatusTable();
     await this.createProductTable();
 
     // inject seeders :D
   }
-  async injectSeeders(): Promise<void> {
+  private async injectSeeders(): Promise<void> {
     // inject seeders :D
-
+    await productsSeeder(
+      this.productRepository,
+      this.categoryRepository,
+      this.statusRepository,
+    );
   }
-  async init(): void {
+  public async init() {
     try {
       await this.createTables();
       await this.injectSeeders();
-      return true;
     } catch (error) {
-      
+      throw new Error('Ocurrió un error durante el proceso de inicialización.');
     }
   }
 
