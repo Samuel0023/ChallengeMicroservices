@@ -157,6 +157,10 @@ export class ProductService {
 
   async delete(id: number): Promise<void> {
     try {
+      const product = await this.productRepository.findOneBy({ id: id });
+      if (!product) {
+        throw new Error('Product not found');
+      }
       await this.productRepository.delete(id);
     } catch (error) {
       throw new Error('Error al eliminar el producto');
