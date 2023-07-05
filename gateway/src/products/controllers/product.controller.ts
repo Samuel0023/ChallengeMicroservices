@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   Delete,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ProductService } from '../services/product.service';
 import { Product } from '../interface/product.interface';
@@ -34,6 +36,11 @@ export class ProductController {
   }
 
   @Post()
+  @UsePipes(
+    new ValidationPipe({
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  )
   async createProduct(@Body() newProduct: CreateProductDto): Promise<Product> {
     try {
       return await this.productService.createProduct(newProduct);
@@ -43,6 +50,11 @@ export class ProductController {
   }
 
   @Put(':id')
+  @UsePipes(
+    new ValidationPipe({
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  )
   async updateProduct(
     @Param('id') id: number,
     @Body() updatedProduct: UpdateProductDto,

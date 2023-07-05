@@ -1,4 +1,10 @@
-import { Controller, Post, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  HttpException,
+  HttpStatus,
+  Get,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOkResponse,
@@ -32,7 +38,51 @@ export class ProvisioningController {
   async initiateProvisioning(): Promise<any> {
     try {
       const response = await firstValueFrom(
-        this.provisioningService.send('api_gateway_request', {}),
+        this.provisioningService.send('set_Initials_Structures', {}),
+      );
+
+      if (response.success) {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new HttpException(
+        `${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('categories')
+  @ApiOkResponse({ description: 'Search completed successfully' })
+  @ApiInternalServerErrorResponse({ description: 'Search failed' })
+  async getAllCategories(): Promise<any> {
+    try {
+      const response = await firstValueFrom(
+        this.provisioningService.send('get_All_Categories', {}),
+      );
+
+      if (response.success) {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      throw new HttpException(
+        `${error.message}`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('status')
+  @ApiOkResponse({ description: 'Search completed successfully' })
+  @ApiInternalServerErrorResponse({ description: 'Search failed' })
+  async getAllStatus(): Promise<any> {
+    try {
+      const response = await firstValueFrom(
+        this.provisioningService.send('get_all_status', {}),
       );
 
       if (response.success) {

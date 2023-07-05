@@ -7,3 +7,4 @@ export interface Product {
   precio: number;
   estado: string;
 }
+  

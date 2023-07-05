@@ -15,7 +15,7 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   @IsNumber()
-  id_categoria: number;
+  categoryId: number;
 
   @IsNotEmpty()
   @IsDecimal()
@@ -23,5 +23,5 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   @IsNumber()
-  id_estado: number;
+  statusId: number;
 }

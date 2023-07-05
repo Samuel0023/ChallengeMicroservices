@@ -72,4 +72,20 @@ export class ProvisioningService {
       )`,
     );
   }
+
+  public async findAllCategories(): Promise<Category[]> {
+    try {
+      return this.categoryRepository.find();
+    } catch (error) {
+      throw new Error('Error al obtener todos los productos');
+    }
+  }
+
+  public async findAlStatus(): Promise<Status[]> {
+    try {
+      return this.statusRepository.find();
+    } catch (error) {
+      throw new Error('Error al obtener todos los productos');
+    }
+  }
 }

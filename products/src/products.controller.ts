@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ProductService } from './services/products.service';
 import { Product } from './entities/product.entity';
-import { CreateProductDto, UpdateProductDto } from './dtos';
+import { CreateProductDto, ProductDTO, UpdateProductDto } from './dtos';
 
 @Controller()
 export class ProductController {
@@ -12,12 +12,12 @@ export class ProductController {
   async getAllProducts(): Promise<{
     success: boolean;
     message: string;
-    data: any;
+    data: ProductDTO[] | ProductDTO | null;
   }> {
     try {
       await this.productService.findAll();
       return {
-        success: false,
+        success: true,
         message: 'Get all products successfully',
         data: await this.productService.findAll(),
       };
@@ -34,7 +34,7 @@ export class ProductController {
   async getProductById(@Payload() id: number): Promise<{
     success: boolean;
     message: string;
-    data: any;
+    data: ProductDTO | null;
   }> {
     try {
       return {
@@ -56,7 +56,7 @@ export class ProductController {
   async createProduct(@Payload() product: CreateProductDto): Promise<{
     success: boolean;
     message: string;
-    data: Product;
+    data: ProductDTO | any | null;
   }> {
     try {
       const createdProduct = await this.productService.create(product);
@@ -69,7 +69,7 @@ export class ProductController {
       return {
         success: false,
         message: `${error.message}`,
-        data: null,
+        data: product,
       };
     }
   }
@@ -80,7 +80,7 @@ export class ProductController {
   ): Promise<{
     success: boolean;
     message: string;
-    data: Product | null;
+    data: ProductDTO | null;
   }> {
     const { id, product } = payload;
     try {

@@ -1,4 +1,6 @@
-import { IsNumber, IsString, IsDecimal } from 'class-validator';
+import { IsString, IsInt, Validate } from 'class-validator';
+import { IsDecimalValidator } from 'src/utils/customDecimalValidator';
+
 export class UpdateProductDto {
   @IsString()
   nombre_producto?: string;
@@ -6,15 +8,15 @@ export class UpdateProductDto {
   @IsString()
   descripcion?: string;
 
-  @IsNumber()
+  @IsInt()
   sku?: number;
 
-  @IsNumber()
-  id_categoria?: number;
+  @IsInt()
+  categoryId?: number;
 
-  @IsDecimal()
+  @Validate(IsDecimalValidator)
   precio?: number;
 
-  @IsNumber()
-  id_estado?: number;
+  @IsInt()
+  statusId?: number;
 }

@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString, IsDecimal } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Validate } from 'class-validator';
+import { IsDecimalValidator } from 'src/utils/customDecimalValidator';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -15,13 +16,13 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   @IsNumber()
-  id_categoria: number;
+  categoryId: number;
 
   @IsNotEmpty()
-  @IsDecimal()
+  @Validate(IsDecimalValidator)
   precio: number;
 
   @IsNotEmpty()
   @IsNumber()
-  id_estado: number;
+  statusId: number;
 }
