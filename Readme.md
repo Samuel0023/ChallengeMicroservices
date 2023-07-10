@@ -45,4 +45,7 @@ First, run `yarn` to install all dependencies
 
 Second, run `yarn dev` to start the microservice
 
+path: [http://localhost:3000/products](http://localhost:3000/products)
+![image](https://github.com/Samuel0023/ChallengeMicroservices/assets/38141029/349b448c-5157-444f-918b-8d783f3ff69b)
 is the view of the list of existing products
+
